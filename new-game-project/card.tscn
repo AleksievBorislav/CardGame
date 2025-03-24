@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxakpxy8fj45s"]
+
+[ext_resource type="Texture2D" uid="uid://b3o8yospisqwj" path="res://Screenshot 2025-03-24 202914.png" id="1_kikvd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu6xs"]
+size = Vector2(237, 324)
+
+[node name="Ace of spades" type="Node2D"]
+
+[node name="card image" type="Sprite2D" parent="."]
+texture = ExtResource("1_kikvd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, -1)
+shape = SubResource("RectangleShape2D_uu6xs")
