@@ -1,0 +1,20 @@
+const CARDS = { #Element, Value
+	"Winged dragon of Ra" : [1, "K"],
+	"Osyris the sky dragon" : [3, "Q"],
+	"Obelisk the tormentor" : [4, "10"],
+	"Black sage" : [2, "J"],
+	"Black magician girl" : [4, "2"],
+	"Dark Paladin" : [4, "3"],
+ 	"Summoning skull" : [4, "6"],
+ 	"Blue eyes white dragon" : [4, "8"],
+ 	"Flaming swordsman" : [4, "10"],
+ 	"Monster reborn" : [4, "Joker"],
+ 	"Polymerisation" : [4, "J"],
+	"BATMAN NA KON" : [4, "J"],
+ 	"Magician of Black Chaos" : [4, "J"],
+ 	"Dragon master knight" : [4, "J"],
+ 	"Right hand of the forbidden one" : [4, "J"],
+ 	"Left leg of the forbidden one" : [4, "J"],
+ 	"Right leg of the forbidden one" : [4, "J"],
+	"EXODIA THE FORBIDDEN ONE" : [4, "J"]
+}
