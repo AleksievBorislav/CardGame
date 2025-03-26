@@ -24,14 +24,18 @@ func _input(event):
 			finish_drag()
 			
 func start_drag(card):
+	var card_slot_found = raycast_check_for_card_slot()
+	if card_slot_found :
+			card_slot_found.card_in_slot = false
 	card_being_dragged = card
 	
 func finish_drag():
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and not card_slot_found.card_in_slot:
-		card_being_dragged.position = card_slot_found.position
-		card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true;
-		card_slot_found.card_in_slot = true;
+		if card_being_dragged:
+			card_being_dragged.position = card_slot_found.position
+			#card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true;
+			card_slot_found.card_in_slot = true;
 	card_being_dragged = null
 			
 func raycast_check_for_card_slot():
