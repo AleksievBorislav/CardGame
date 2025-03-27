@@ -4,6 +4,31 @@ var playerDeck = []
 var cardDatabaseReference
 var handRef
 
+# Paths to mini images for elements and values
+const ELEMENT_ICONS = {
+	"fire": preload("res://Assets/mini icons/miniFire.jpg"),
+	"fear": preload("res://Assets/mini icons/fear.jpeg"),
+	"ice": preload("res://Assets/mini icons/ice.jpg"),
+	"thunder": preload("res://Assets/mini icons/thunder.jpg")
+}
+
+
+const VALUE_ICONS = {
+	"ace": preload("res://Assets/mini icons/ace.jpg"),
+	"king": preload("res://Assets/mini icons/king.png"),
+	"queen": preload("res://Assets/mini icons/queen.jpg"),
+	"jack": preload("res://Assets/mini icons/jack.jpg"),
+	"ten": preload("res://Assets/mini icons/10.jpeg"),
+	"nine": preload("res://Assets/mini icons/9.png"),
+	"eight": preload("res://Assets/mini icons/8.png"),
+	"seven": preload("res://Assets/mini icons/7.png"),
+	"six": preload("res://Assets/mini icons/6.png"),
+	"five": preload("res://Assets/mini icons/5.png"),
+	"four": preload("res://Assets/mini icons/4.png"),
+	"three": preload("res://Assets/mini icons/3.png"),
+	"two": preload("res://Assets/mini icons/2.jpg")
+}
+
 func _ready() -> void:
 	cardDatabaseReference = preload("res://Scripts/CardDatabase.gd")
 	handRef = $"../PlayerHand"
@@ -32,8 +57,18 @@ func drawCard():
 		var sprite = newCard.get_node("card image")
 		sprite.texture = load(cardImagePath)
 		newCard.get_node("card image").texture = load(cardImagePath)
-		newCard.get_node("element").text = card_drawn.element
-		newCard.get_node("value").text = card_drawn.value
+
+			# Set mini images
+		var element_icon = newCard.get_node("elementIcon")
+		var value_icon = newCard.get_node("valueIcon")
+		
+		
+		if card_drawn.element in ELEMENT_ICONS:
+			element_icon.texture = ELEMENT_ICONS[card_drawn.element]
+			
+		if card_drawn.value in VALUE_ICONS:
+			value_icon.texture = VALUE_ICONS[card_drawn.value]
+		
 		$"../CardManager".add_child(newCard)
 		newCard.name = "Card"
 		newCard.cardProps = card_drawn
