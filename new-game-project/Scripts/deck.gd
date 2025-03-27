@@ -1,17 +1,21 @@
 extends Node2D
 const CARD_SCENE_PATH = "res://Scenes/card.tscn"
-var playerDeck = ["Winged dragon of Ra", "Osyris the sky dragon", "Obelisk the tormentor", "Black sage", "Black magician girl", "Dark Paladin",
- "Summoning skull", "Blue eyes white dragon", "Flaming swordsman", "Monster reborn", "Polymerisation",
-"BATMAN NA KON", "Magician of Black Chaos", "Dragon master knight", "Right hand of the forbidden one",
- "Left leg of the forbidden one", "Right leg of the forbidden one",
-"EXODIA THE FORBIDDEN ONE"]
+var playerDeck = []
 var cardDatabaseReference
 var handRef
 
 func _ready() -> void:
-	playerDeck.shuffle()
 	cardDatabaseReference = preload("res://Scripts/CardDatabase.gd")
 	handRef = $"../PlayerHand"
+	for card_name in cardDatabaseReference.CARDS.keys():
+		playerDeck.append({ 
+			"name": card_name, 
+			"element": cardDatabaseReference.CARDS[card_name][0], 
+			"value": cardDatabaseReference.CARDS[card_name][1] 
+		})
+
+	playerDeck.shuffle()  # Shuffle the deck
+
 
 func drawCard():
 	if handRef.cardsInHand < handRef.maxCardsInHand:
@@ -24,14 +28,15 @@ func drawCard():
 	
 		var cardScene = preload(CARD_SCENE_PATH)
 		var newCard = cardScene.instantiate()
-		var cardImagePath = str("res://Assets/" + card_drawn + ".jpg")			
+		var cardImagePath = str("res://Assets/" + card_drawn.name + ".jpg")			
 		var sprite = newCard.get_node("card image")
 		sprite.texture = load(cardImagePath)
 		newCard.get_node("card image").texture = load(cardImagePath)
-		newCard.get_node("element").text = str(cardDatabaseReference.CARDS[card_drawn][0])
-		newCard.get_node("value").text = str(cardDatabaseReference.CARDS[card_drawn][1])
+		newCard.get_node("element").text = card_drawn.element
+		newCard.get_node("value").text = card_drawn.value
 		$"../CardManager".add_child(newCard)
 		newCard.name = "Card"
+		newCard.cardProps = card_drawn
 		handRef.addCardToHand(newCard)
 		newCard.get_node("AnimationPlayer").play("card_flip")
 		

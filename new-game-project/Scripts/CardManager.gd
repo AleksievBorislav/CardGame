@@ -8,10 +8,17 @@ var screen_size
 var is_hovering_on_card
 var card_hovered_scale = Vector2(1.1, 1.1)
 var card_normal_scale = Vector2(1, 1)
-var playerHandRefference
+var playerHandReference
+var slotsmanagerReference
 
+signal pickedACardInSlot
+signal removedACardFromSlot
+
+
+										#Setup
 func _ready() -> void:
-	playerHandRefference = $"../PlayerHand"
+	playerHandReference = $"../PlayerHand"
+	slotsmanagerReference = $"../SlotsManager"
 	screen_size = get_viewport_rect().size
 	$"../InputManager".connect("leftRelease", onLeftRelease)
 
@@ -20,29 +27,62 @@ func _process(delta: float) -> void:
 		var mouse_pos = get_global_mouse_position()
 		card_being_dragged.position = Vector2(clamp(mouse_pos.x, 0, screen_size.x),
 		 clamp(mouse_pos.y, 0, screen_size.y))
+		
+		
+func connect_card_signals(card):
+	card.connect("hovered", on_hovered_over_card)
+	card.connect("hovered_off", on_hovered_off_over_card)
+	
+										#Drag logic
 			
 func start_drag(card):
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found :
-			card_slot_found.card_in_slot = false
+			slotsmanagerReference.deslotACard(card, card_slot_found)
 	card_being_dragged = card
 	
 func finish_drag():
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and not card_slot_found.card_in_slot:
 		if card_being_dragged:
-			print(card_being_dragged)
-			playerHandRefference.removeCardFromHand(card_being_dragged)
+			playerHandReference.removeCardFromHand(card_being_dragged)
 			card_being_dragged.position = card_slot_found.position
 			card_being_dragged.scale = card_normal_scale
-			#card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true;
-			card_slot_found.card_in_slot = true;
-			
+			card_slot_found.card_in_slot = card_being_dragged;
+			slotsmanagerReference.slotCard(card_being_dragged, card_slot_found)
 	else:
 		if(card_being_dragged):
-			playerHandRefference.addCardToHand(card_being_dragged)
+			playerHandReference.addCardToHand(card_being_dragged)
 	card_being_dragged = null
-			
+	
+func onLeftRelease():
+	if card_being_dragged:
+		finish_drag()	
+
+												#Hover logic
+func on_hovered_over_card(card):
+	if !is_hovering_on_card:
+		is_hovering_on_card = true
+		highlight_card(card, true)
+
+func on_hovered_off_over_card(card):
+	highlight_card(card, false)
+	var new_card_hovered = raycast_check_for_card()
+	if new_card_hovered:
+		highlight_card(new_card_hovered, true)
+		
+	else: 
+		is_hovering_on_card = false
+	
+	
+func highlight_card(card, hovered):
+	if hovered and not raycast_check_for_card_slot():
+		card.scale = card_hovered_scale
+		card.z_index = 2;
+	else:
+		card.scale = card_normal_scale
+		card.z_index = 1
+												#Raycasts
 func raycast_check_for_card_slot():
 		var space_state = get_world_2d().direct_space_state
 		var parameters = PhysicsPointQueryParameters2D.new()
@@ -81,34 +121,3 @@ func get_highest_z_index_card(cards):
 		return z_card
 	else:
 		return null
-			
-func connect_card_signals(card):
-	card.connect("hovered", on_hovered_over_card)
-	card.connect("hovered_off", on_hovered_off_over_card)
-	
-func on_hovered_over_card(card):
-	if !is_hovering_on_card:
-		is_hovering_on_card = true
-		highlight_card(card, true)
-
-func on_hovered_off_over_card(card):
-	highlight_card(card, false)
-	var new_card_hovered = raycast_check_for_card()
-	if new_card_hovered:
-		highlight_card(new_card_hovered, true)
-		
-	else: 
-		is_hovering_on_card = false
-	
-	
-func highlight_card(card, hovered):
-	if hovered and not raycast_check_for_card_slot():
-		card.scale = card_hovered_scale
-		card.z_index = 2;
-	else:
-		card.scale = card_normal_scale
-		card.z_index = 1
-	
-func onLeftRelease():
-	if card_being_dragged:
-		finish_drag()	

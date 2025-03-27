@@ -35,12 +35,12 @@ func animateCardToPosition(card, newPosition):
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "position", newPosition, 0.2)
 	
-	
 func removeCardFromHand(card):
 	if card in playerHandList:
 		playerHandList.erase(card)
 		updateHandPositions()
 		cardsInHand = cardsInHand - 1
+
 
 		
 	

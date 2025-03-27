@@ -4,6 +4,7 @@ signal hovered
 signal hovered_off
 
 var positionInHand
+var cardProps
 
 func _ready() -> void:
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d01ylllvr1lpy"]
+[gd_scene load_steps=11 format=3 uid="uid://d01ylllvr1lpy"]
 
 [ext_resource type="Script" uid="uid://df871mnru8qdm" path="res://Scripts/CardManager.gd" id="1_uu6xs"]
 [ext_resource type="PackedScene" uid="uid://c5jm2nv2n5je6" path="res://Scenes/card_slot.tscn" id="3_r0du0"]
@@ -6,40 +6,20 @@
 [ext_resource type="Script" uid="uid://onhswxv7aw86" path="res://Scripts/player_hand.gd" id="5_fos0i"]
 [ext_resource type="Texture2D" uid="uid://csx562pv661vr" path="res://Assets/CardBack.jpg" id="5_pbw6q"]
 [ext_resource type="Script" uid="uid://c00lqh0wsa8kn" path="res://Scripts/deck.gd" id="5_v1gob"]
+[ext_resource type="Script" uid="uid://w0g2yr1m33mi" path="res://Scripts/slots_manager.gd" id="6_50glp"]
 [ext_resource type="Script" uid="uid://bhvvsoox1ckly" path="res://Scripts/input_manager.gd" id="7_jw32o"]
+[ext_resource type="PackedScene" uid="uid://dgdplkoot418n" path="res://Scenes/combo_text.tscn" id="9_vy5pj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v1gob"]
 size = Vector2(96, 140)
 
 [node name="Main" type="Node2D"]
 
+[node name="InputManager" type="Node2D" parent="."]
+script = ExtResource("7_jw32o")
+
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("1_uu6xs")
-
-[node name="CardSlot" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(650, 770)
-scale = Vector2(0.6, 0.6)
-script = ExtResource("4_cm0pq")
-
-[node name="CardSlot2" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(800, 770)
-scale = Vector2(0.6, 0.6)
-script = ExtResource("4_cm0pq")
-
-[node name="CardSlot3" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(950, 770)
-scale = Vector2(0.6, 0.6)
-script = ExtResource("4_cm0pq")
-
-[node name="CardSlot4" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(1100, 770)
-scale = Vector2(0.6, 0.6)
-script = ExtResource("4_cm0pq")
-
-[node name="CardSlot5" parent="." instance=ExtResource("3_r0du0")]
-position = Vector2(1250, 770)
-scale = Vector2(0.6, 0.6)
-script = ExtResource("4_cm0pq")
 
 [node name="PlayerHand" type="Node2D" parent="."]
 script = ExtResource("5_fos0i")
@@ -64,5 +44,36 @@ shape = SubResource("RectangleShape2D_v1gob")
 scale = Vector2(0.13, 0.13)
 texture = ExtResource("5_pbw6q")
 
-[node name="InputManager" type="Node2D" parent="."]
-script = ExtResource("7_jw32o")
+[node name="SlotsManager" type="Node2D" parent="."]
+script = ExtResource("6_50glp")
+
+[node name="CardSlot" parent="SlotsManager" instance=ExtResource("3_r0du0")]
+position = Vector2(650, 770)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("4_cm0pq")
+
+[node name="CardSlot2" parent="SlotsManager" instance=ExtResource("3_r0du0")]
+position = Vector2(800, 770)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("4_cm0pq")
+
+[node name="CardSlot3" parent="SlotsManager" instance=ExtResource("3_r0du0")]
+position = Vector2(950, 770)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("4_cm0pq")
+
+[node name="CardSlot4" parent="SlotsManager" instance=ExtResource("3_r0du0")]
+position = Vector2(1100, 770)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("4_cm0pq")
+
+[node name="CardSlot5" parent="SlotsManager" instance=ExtResource("3_r0du0")]
+position = Vector2(1250, 770)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("4_cm0pq")
+
+[node name="comboText" parent="." instance=ExtResource("9_vy5pj")]
+offset_left = 825.0
+offset_top = 624.0
+offset_right = 1068.0
+offset_bottom = 670.0
