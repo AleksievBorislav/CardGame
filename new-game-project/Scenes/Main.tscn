@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://d01ylllvr1lpy"]
+[gd_scene load_steps=12 format=3 uid="uid://d01ylllvr1lpy"]
 
 [ext_resource type="Script" uid="uid://df871mnru8qdm" path="res://Scripts/CardManager.gd" id="1_uu6xs"]
 [ext_resource type="PackedScene" uid="uid://c5jm2nv2n5je6" path="res://Scenes/card_slot.tscn" id="3_r0du0"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://w0g2yr1m33mi" path="res://Scripts/slots_manager.gd" id="6_50glp"]
 [ext_resource type="Script" uid="uid://bhvvsoox1ckly" path="res://Scripts/input_manager.gd" id="7_jw32o"]
 [ext_resource type="PackedScene" uid="uid://dgdplkoot418n" path="res://Scenes/combo_text.tscn" id="9_vy5pj"]
+[ext_resource type="Script" uid="uid://1mqu7t2olaf0" path="res://Scenes/confirm_combo.gd" id="10_bmxlf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v1gob"]
 size = Vector2(96, 140)
@@ -77,3 +78,20 @@ offset_left = 825.0
 offset_top = 624.0
 offset_right = 1068.0
 offset_bottom = 670.0
+
+[node name="confirmCombo" type="Button" parent="."]
+offset_left = 1417.0
+offset_top = 640.0
+offset_right = 1492.0
+offset_bottom = 678.0
+text = "Choose
+"
+script = ExtResource("10_bmxlf")
+
+[node name="discard" type="Button" parent="."]
+offset_left = 1502.0
+offset_top = 639.0
+offset_right = 1577.0
+offset_bottom = 677.0
+text = "Discard
+"

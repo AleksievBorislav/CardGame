@@ -1,6 +1,7 @@
 extends Node2D
 
 var cardSlots = []
+var slottedCards = []
 var comboText
 
 const FIRE = "fire"
@@ -22,16 +23,16 @@ func slotCard(card, cardSlot):
 		
 func deslotACard(card, cardSlot):
 		cardSlot.card_in_slot = false
+		#slottedCards.remove(card)
 		showCombo()
 		
 		
 func showCombo():
-	var hand = []
 	for i in range(cardSlots.size()):
 		if cardSlots[i].card_in_slot:
-			hand.append([cardSlots[i].card_in_slot.cardProps.element, cardSlots[i].card_in_slot.cardProps.value])
+			slottedCards.append([cardSlots[i].card_in_slot.cardProps.element, cardSlots[i].card_in_slot.cardProps.value])
 	
-	var combo = evaluate_hand(hand)
+	var combo = evaluate_hand(slottedCards)
 	if combo:
 		show_text(combo, Vector2(950, 600))
 	else:
@@ -131,8 +132,10 @@ func evaluate_hand(equipped_cards: Array) -> String:
 	if pair_count == 1:
 		return "One Pair"
 
-	# Otherwise, return High Card
-	return "High Card: " + str(sorted_values[-1])
+	if(sorted_values):
+		return "High Card: " + str(sorted_values[-1])
+	return ""
+	
 
 # Helper function to convert card values to numerical ranking
 func card_value(card_rank: String) -> int:
